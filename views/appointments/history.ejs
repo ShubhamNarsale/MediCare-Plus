@@ -1,0 +1,45 @@
+<%- include('../partials/header') %>
+<div class="container py-5">
+  <h1 class="fw-bold mb-4">My Appointments</h1>
+
+  <% if (!appointments.length) { %>
+    <div class="text-center py-5">
+      <i class="bi bi-calendar-x display-1 text-muted"></i>
+      <p class="lead text-muted mt-3">You haven't booked any appointments yet.</p>
+      <a href="/doctors" class="btn btn-primary">Find a Doctor</a>
+    </div>
+  <% } else { %>
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>Doctor</th>
+            <th>Department</th>
+            <th>Date &amp; Time</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% appointments.forEach(function(a) { %>
+            <tr>
+              <td><%= a.doctor_name %><br><span class="small text-muted"><%= a.specialization %></span></td>
+              <td><%= a.department_name %></td>
+              <td><%= formatDate(a.appointment_date) %><br><span class="small text-muted"><%= formatTime(a.appointment_time) %></span></td>
+              <td><span class="badge badge-status-<%= a.status %>"><%= a.status %></span></td>
+              <td>
+                <a href="/appointments/<%= a.id %>" class="btn btn-sm btn-outline-primary">View</a>
+                <% if (a.status === 'pending' || a.status === 'confirmed') { %>
+                  <form method="POST" action="/appointments/<%= a.id %>/cancel" class="d-inline" onsubmit="return confirm('Cancel this appointment?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Cancel</button>
+                  </form>
+                <% } %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>
+<%- include('../partials/footer') %>

@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+<div class="container py-5">
+  <h1 class="fw-bold mb-4">Contact Us</h1>
+  <% if (hospital) { %>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card p-4">
+          <p><i class="bi bi-building text-primary me-2"></i><%= hospital.name %></p>
+          <p><i class="bi bi-geo-alt-fill text-primary me-2"></i><%= hospital.address %></p>
+          <p><i class="bi bi-telephone-fill text-primary me-2"></i><%= hospital.phone %></p>
+          <p><i class="bi bi-envelope-fill text-primary me-2"></i><%= hospital.email %></p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-4 emergency-banner">
+          <h5><i class="bi bi-exclamation-triangle-fill me-1"></i> Emergency Contact</h5>
+          <p class="fs-4 fw-bold mb-0"><%= hospital.emergency_phone %></p>
+        </div>
+      </div>
+    </div>
+  <% } else { %>
+    <p class="text-muted">Contact information is not available yet.</p>
+  <% } %>
+</div>
+<%- include('../partials/footer') %>

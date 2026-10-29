@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+npm-debug.log*
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+
+# Uploaded files (user-generated content, keep folder but ignore contents)
+public/images/uploads/*
+!public/images/uploads/.gitkeep
+
+# Test coverage
+coverage/

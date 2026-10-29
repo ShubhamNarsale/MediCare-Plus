@@ -1,0 +1,20 @@
+<% if (typeof successMessages !== 'undefined' && successMessages && successMessages.length) { %>
+  <div class="container mt-3">
+    <% successMessages.forEach(function(msg) { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle-fill me-1"></i><%= msg %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% }); %>
+  </div>
+<% } %>
+<% if (typeof errorMessages !== 'undefined' && errorMessages && errorMessages.length) { %>
+  <div class="container mt-3">
+    <% errorMessages.forEach(function(msg) { %>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-circle-fill me-1"></i><%= msg %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% }); %>
+  </div>
+<% } %>

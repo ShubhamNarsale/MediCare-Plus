@@ -1,0 +1,40 @@
+<%- include('../partials/header') %>
+<div class="container py-5">
+  <h1 class="fw-bold mb-4">Our Doctors</h1>
+
+  <form method="GET" action="/doctors" class="row g-2 mb-4">
+    <div class="col-sm-6">
+      <input type="text" name="search" class="form-control" placeholder="Search by name or specialization" value="<%= filters.search %>">
+    </div>
+    <div class="col-sm-4">
+      <select name="department" class="form-select">
+        <option value="">All Departments</option>
+        <% departments.forEach(function(dept) { %>
+          <option value="<%= dept.id %>" <%= String(filters.department) === String(dept.id) ? 'selected' : '' %>><%= dept.name %></option>
+        <% }); %>
+      </select>
+    </div>
+    <div class="col-sm-2">
+      <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+  </form>
+
+  <div class="row g-4">
+    <% doctors.forEach(function(doc) { %>
+      <div class="col-sm-6 col-lg-4">
+        <div class="card h-100">
+          <img src="/images/<%= doc.image %>" onerror="this.onerror=null;this.src='/images/placeholder.svg'" class="card-img-top doctor-avatar" alt="<%= doc.name %>">
+          <div class="card-body">
+            <h5 class="card-title mb-1"><%= doc.name %></h5>
+            <p class="text-primary small mb-1"><%= doc.specialization %></p>
+            <p class="small text-muted mb-1"><%= doc.department_name %></p>
+            <p class="small text-muted mb-3"><%= doc.experience %> yrs experience &middot; <%= formatCurrency(doc.consultation_fee) %> fee</p>
+            <a href="/doctors/<%= doc.id %>" class="btn btn-sm btn-primary">View Profile</a>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+    <% if (!doctors.length) { %><p class="text-muted">No doctors matched your search.</p><% } %>
+  </div>
+</div>
+<%- include('../partials/footer') %>

@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+<div class="container py-5">
+  <h1 class="fw-bold mb-4">Our Departments</h1>
+  <div class="row g-4">
+    <% departments.forEach(function(dept) { %>
+      <div class="col-sm-6 col-lg-4">
+        <div class="card h-100">
+          <img src="/images/<%= dept.image %>" onerror="this.onerror=null;this.src='/images/placeholder.svg'" class="card-img-top" style="height:160px;object-fit:cover;" alt="<%= dept.name %>">
+          <div class="card-body">
+            <h5 class="card-title"><%= dept.name %></h5>
+            <p class="card-text small text-muted"><%= dept.description %></p>
+            <a href="/doctors?department=<%= dept.id %>" class="btn btn-sm btn-primary">View Doctors</a>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+    <% if (!departments.length) { %><p class="text-muted">No departments found.</p><% } %>
+  </div>
+</div>
+<%- include('../partials/footer') %>

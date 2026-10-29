@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+<div class="container py-5">
+  <div class="row g-4">
+    <div class="col-md-4">
+      <img src="/images/<%= doctor.image %>" onerror="this.onerror=null;this.src='/images/placeholder.svg'" class="img-fluid rounded shadow-sm" alt="<%= doctor.name %>">
+    </div>
+    <div class="col-md-8">
+      <h1 class="fw-bold mb-1"><%= doctor.name %></h1>
+      <p class="text-primary fs-5 mb-1"><%= doctor.specialization %></p>
+      <p class="text-muted mb-3"><%= doctor.department_name %> &middot; <%= doctor.qualification %></p>
+      <p><%= doctor.bio %></p>
+      <ul class="list-unstyled">
+        <li><i class="bi bi-briefcase-fill text-primary me-2"></i><%= doctor.experience %> years experience</li>
+        <li><i class="bi bi-cash-coin text-primary me-2"></i>Consultation fee: <%= formatCurrency(doctor.consultation_fee) %></li>
+        <% if (doctor.available_days) { %>
+          <li><i class="bi bi-calendar-check text-primary me-2"></i>Available: <%= doctor.available_days %></li>
+        <% } %>
+        <% if (doctor.start_time && doctor.end_time) { %>
+          <li><i class="bi bi-clock-fill text-primary me-2"></i><%= formatTime(doctor.start_time) %> - <%= formatTime(doctor.end_time) %></li>
+        <% } %>
+      </ul>
+      <% if (typeof currentUser !== 'undefined' && currentUser && currentUser.role === 'patient') { %>
+        <a href="/appointments/book/<%= doctor.id %>" class="btn btn-primary btn-lg mt-2">Book Appointment</a>
+      <% } else if (typeof currentUser !== 'undefined' && currentUser && currentUser.role === 'admin') { %>
+        <p class="text-muted mt-2">Admins cannot book appointments.</p>
+      <% } else { %>
+        <a href="/login" class="btn btn-primary btn-lg mt-2">Login to Book Appointment</a>
+      <% } %>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

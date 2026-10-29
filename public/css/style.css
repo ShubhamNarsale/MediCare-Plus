@@ -1,0 +1,57 @@
+:root {
+  --brand-primary: #0d6e6e;
+  --brand-primary-dark: #095656;
+  --brand-accent: #2fb8a4;
+  --brand-bg: #f4f9f9;
+}
+
+body {
+  background-color: var(--brand-bg);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #1f2d2d;
+}
+
+main { min-height: 70vh; display: block; }
+
+.navbar { background-color: var(--brand-primary); }
+.navbar .nav-link { color: rgba(255,255,255,.85); }
+.navbar .nav-link:hover { color: #fff; }
+.navbar-brand { color: #fff !important; }
+
+.btn-primary, .bg-primary { background-color: var(--brand-primary) !important; border-color: var(--brand-primary) !important; }
+.btn-primary:hover { background-color: var(--brand-primary-dark) !important; border-color: var(--brand-primary-dark) !important; }
+.text-primary { color: var(--brand-primary) !important; }
+
+a { color: var(--brand-primary); text-decoration: none; }
+a:hover { color: var(--brand-primary-dark); }
+
+.hero-section {
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+  color: #fff;
+  padding: 4rem 0;
+}
+
+.card { border: none; box-shadow: 0 2px 10px rgba(0,0,0,0.06); border-radius: .75rem; }
+.card-img-top { height: 180px; object-fit: cover; border-radius: .75rem .75rem 0 0; background: #e6efef; }
+
+.doctor-avatar, .product-thumb { width: 100%; height: 180px; object-fit: cover; background: #e6efef; }
+
+.footer-main { background-color: #0b3d3d; color: #d5e6e6; }
+.footer-main a { color: #cdeaea; }
+.footer-main a:hover { color: #fff; }
+
+.badge-status-pending { background-color: #f0ad4e; }
+.badge-status-confirmed { background-color: #5bc0de; }
+.badge-status-completed { background-color: #5cb85c; }
+.badge-status-cancelled { background-color: #d9534f; }
+
+.stat-card { border-left: 4px solid var(--brand-primary); }
+
+.emergency-banner {
+  background-color: #d9534f;
+  color: #fff;
+  border-radius: .75rem;
+}
+
+.chat-bubble-bot { background: #e6efef; border-radius: .75rem; padding: .6rem 1rem; max-width: 80%; }
+.chat-bubble-user { background: var(--brand-primary); color: #fff; border-radius: .75rem; padding: .6rem 1rem; max-width: 80%; margin-left: auto; }

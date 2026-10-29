@@ -1,0 +1,66 @@
+<%- include('../partials/header') %>
+<div class="container py-5">
+  <h1 class="fw-bold mb-1"><i class="bi bi-robot text-primary"></i> AI Health Assistant</h1>
+  <div class="alert alert-warning mt-3" role="alert">
+    <i class="bi bi-info-circle-fill me-1"></i>
+    This AI assistant provides general health information and website guidance. It does not diagnose diseases or replace a qualified doctor.
+  </div>
+
+  <div class="card p-3">
+    <div id="chatWindow" class="d-flex flex-column gap-3 mb-3" style="min-height:320px; max-height:480px; overflow-y:auto;">
+      <div class="chat-bubble-bot">
+        Hi! I'm the MediCare+ Assistant. Ask me about booking appointments, departments, products, or general site navigation.
+      </div>
+    </div>
+
+    <form id="chatForm" class="d-flex gap-2">
+      <label for="chatInput" class="visually-hidden">Message</label>
+      <input type="text" id="chatInput" class="form-control" placeholder="Type your question..." autocomplete="off" required>
+      <button type="submit" class="btn btn-primary"><i class="bi bi-send-fill"></i></button>
+    </form>
+    <div id="chatLoading" class="small text-muted mt-2 d-none">Assistant is typing...</div>
+    <div id="chatError" class="small text-danger mt-2 d-none">Something went wrong. Please try again.</div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('chatForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var input = document.getElementById('chatInput');
+    var chatWindow = document.getElementById('chatWindow');
+    var loading = document.getElementById('chatLoading');
+    var errorBox = document.getElementById('chatError');
+    var message = input.value.trim();
+    if (!message) return;
+
+    var userBubble = document.createElement('div');
+    userBubble.className = 'chat-bubble-user';
+    userBubble.textContent = message;
+    chatWindow.appendChild(userBubble);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+    input.value = '';
+    loading.classList.remove('d-none');
+    errorBox.classList.add('d-none');
+
+    fetch('/ai/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: message })
+    })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        loading.classList.add('d-none');
+        var botBubble = document.createElement('div');
+        botBubble.className = 'chat-bubble-bot';
+        botBubble.textContent = data.reply || 'Sorry, I could not process that.';
+        chatWindow.appendChild(botBubble);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      })
+      .catch(function () {
+        loading.classList.add('d-none');
+        errorBox.classList.remove('d-none');
+      });
+  });
+</script>
+
+<%- include('../partials/footer') %>

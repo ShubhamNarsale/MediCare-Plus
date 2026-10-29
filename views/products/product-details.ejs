@@ -1,0 +1,41 @@
+<%- include('../partials/header') %>
+<div class="container py-5">
+  <div class="row g-4">
+    <div class="col-md-5">
+      <img src="/images/<%= product.image %>" onerror="this.onerror=null;this.src='/images/placeholder.svg'" class="img-fluid rounded shadow-sm" alt="<%= product.name %>">
+    </div>
+    <div class="col-md-7">
+      <p class="text-muted mb-1"><%= product.category %></p>
+      <h1 class="fw-bold mb-2"><%= product.name %></h1>
+      <p class="fs-3 text-primary fw-bold mb-3"><%= formatCurrency(product.price) %></p>
+      <p><%= product.description %></p>
+      <p class="small text-muted">
+        <% if (product.stock > 0) { %>
+          <i class="bi bi-check-circle-fill text-success"></i> In stock (<%= product.stock %> available)
+        <% } else { %>
+          <i class="bi bi-x-circle-fill text-danger"></i> Out of stock
+        <% } %>
+      </p>
+
+      <% if (typeof currentUser !== 'undefined' && currentUser && currentUser.role === 'patient') { %>
+        <form method="POST" action="/cart/add" class="row g-2 align-items-center mt-3">
+          <input type="hidden" name="product_id" value="<%= product.id %>">
+          <div class="col-auto">
+            <label for="quantity" class="visually-hidden">Quantity</label>
+            <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1" max="<%= product.stock %>" style="width:90px;" <%= product.stock < 1 ? 'disabled' : '' %>>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary" <%= product.stock < 1 ? 'disabled' : '' %>>
+              <i class="bi bi-cart-plus"></i> Add to Cart
+            </button>
+          </div>
+        </form>
+      <% } else if (typeof currentUser !== 'undefined' && currentUser && currentUser.role === 'admin') { %>
+        <p class="text-muted mt-3">Admins cannot purchase products.</p>
+      <% } else { %>
+        <a href="/login" class="btn btn-primary mt-3">Login to Purchase</a>
+      <% } %>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

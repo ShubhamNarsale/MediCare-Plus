@@ -1,0 +1,59 @@
+<%- include('../partials/header') %>
+<div class="container py-5">
+  <h1 class="fw-bold mb-4">My Dashboard</h1>
+
+  <div class="row g-3 mb-5">
+    <div class="col-sm-4">
+      <div class="card stat-card p-3">
+        <p class="text-muted small mb-1">Total Appointments</p>
+        <p class="fs-3 fw-bold mb-0"><%= totalAppointments %></p>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card stat-card p-3">
+        <p class="text-muted small mb-1">Total Orders</p>
+        <p class="fs-3 fw-bold mb-0"><%= totalOrders %></p>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card stat-card p-3">
+        <p class="text-muted small mb-1">Items in Cart</p>
+        <p class="fs-3 fw-bold mb-0"><%= cartItemCount %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4 fw-bold mb-0">Upcoming Appointments</h2>
+    <a href="/appointments" class="small">View all &rarr;</a>
+  </div>
+
+  <% if (!upcomingAppointments.length) { %>
+    <p class="text-muted">No upcoming appointments. <a href="/doctors">Book one now</a>.</p>
+  <% } else { %>
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr><th>Doctor</th><th>Department</th><th>Date &amp; Time</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <% upcomingAppointments.forEach(function(a) { %>
+            <tr>
+              <td><%= a.doctor_name %></td>
+              <td><%= a.department_name %></td>
+              <td><%= formatDate(a.appointment_date) %> &middot; <%= formatTime(a.appointment_time) %></td>
+              <td><span class="badge badge-status-<%= a.status %>"><%= a.status %></span></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+
+  <div class="row g-3 mt-4">
+    <div class="col-sm-4"><a href="/patient/profile" class="btn btn-outline-primary w-100">My Profile</a></div>
+    <div class="col-sm-4"><a href="/patient/orders" class="btn btn-outline-primary w-100">Order History</a></div>
+    <div class="col-sm-4"><a href="/doctors" class="btn btn-primary w-100">Book Appointment</a></div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

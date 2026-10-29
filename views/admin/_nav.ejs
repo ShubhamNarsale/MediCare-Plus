@@ -1,0 +1,10 @@
+<div class="container mt-4">
+  <ul class="nav nav-pills mb-4 flex-wrap gap-1">
+    <li class="nav-item"><a class="nav-link <%= typeof active !== 'undefined' && active === 'dashboard' ? 'active' : '' %>" href="/admin/dashboard">Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link <%= typeof active !== 'undefined' && active === 'patients' ? 'active' : '' %>" href="/admin/patients">Patients</a></li>
+    <li class="nav-item"><a class="nav-link <%= typeof active !== 'undefined' && active === 'doctors' ? 'active' : '' %>" href="/admin/doctors">Doctors</a></li>
+    <li class="nav-item"><a class="nav-link <%= typeof active !== 'undefined' && active === 'products' ? 'active' : '' %>" href="/admin/products">Products</a></li>
+    <li class="nav-item"><a class="nav-link <%= typeof active !== 'undefined' && active === 'appointments' ? 'active' : '' %>" href="/admin/appointments">Appointments</a></li>
+    <li class="nav-item"><a class="nav-link <%= typeof active !== 'undefined' && active === 'orders' ? 'active' : '' %>" href="/admin/orders">Orders</a></li>
+  </ul>
+</div>

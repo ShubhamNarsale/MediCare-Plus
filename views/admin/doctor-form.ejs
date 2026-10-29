@@ -1,0 +1,77 @@
+<%- include('../partials/header') %>
+<%- include('_nav') %>
+<div class="container pb-5">
+  <h1 class="fw-bold mb-4"><%= doctor ? 'Edit Doctor' : 'Add Doctor' %></h1>
+
+  <div class="card p-4">
+    <form method="POST" action="<%= doctor ? '/admin/doctors/' + doctor.id + '/edit' : '/admin/doctors/add' %>">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" id="name" name="name" class="form-control" value="<%= doctor ? doctor.name : '' %>" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" name="email" class="form-control" value="<%= doctor ? doctor.email : '' %>" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="phone" class="form-label">Phone</label>
+          <input type="text" id="phone" name="phone" class="form-control" value="<%= doctor ? (doctor.phone || '') : '' %>">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="qualification" class="form-label">Qualification</label>
+          <input type="text" id="qualification" name="qualification" class="form-control" value="<%= doctor ? (doctor.qualification || '') : '' %>">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="specialization" class="form-label">Specialization</label>
+          <input type="text" id="specialization" name="specialization" class="form-control" value="<%= doctor ? doctor.specialization : '' %>" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="department_id" class="form-label">Department</label>
+          <select id="department_id" name="department_id" class="form-select" required>
+            <option value="">Select department</option>
+            <% departments.forEach(function(dept) { %>
+              <option value="<%= dept.id %>" <%= doctor && String(doctor.department_id) === String(dept.id) ? 'selected' : '' %>><%= dept.name %></option>
+            <% }); %>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label for="experience" class="form-label">Experience (years)</label>
+          <input type="number" id="experience" name="experience" class="form-control" min="0" value="<%= doctor ? doctor.experience : 0 %>">
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="consultation_fee" class="form-label">Consultation Fee</label>
+          <input type="number" id="consultation_fee" name="consultation_fee" class="form-control" min="0" step="0.01" value="<%= doctor ? doctor.consultation_fee : 0 %>">
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="available_days" class="form-label">Available Days</label>
+          <input type="text" id="available_days" name="available_days" class="form-control" placeholder="Mon,Wed,Fri" value="<%= doctor ? (doctor.available_days || '') : '' %>">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="start_time" class="form-label">Start Time</label>
+          <input type="time" id="start_time" name="start_time" class="form-control" value="<%= doctor && doctor.start_time ? doctor.start_time.slice(0,5) : '' %>">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="end_time" class="form-label">End Time</label>
+          <input type="time" id="end_time" name="end_time" class="form-control" value="<%= doctor && doctor.end_time ? doctor.end_time.slice(0,5) : '' %>">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="bio" class="form-label">Bio</label>
+        <textarea id="bio" name="bio" class="form-control" rows="3"><%= doctor ? (doctor.bio || '') : '' %></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary"><%= doctor ? 'Save Changes' : 'Add Doctor' %></button>
+      <a href="/admin/doctors" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
+<%- include('../partials/footer') %>

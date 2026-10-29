@@ -1,0 +1,39 @@
+<%- include('../partials/header') %>
+<%- include('_nav') %>
+<div class="container pb-5">
+  <h1 class="fw-bold mb-4">Orders</h1>
+
+  <% if (!orders.length) { %>
+    <p class="text-muted">No orders placed yet.</p>
+  <% } else { %>
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr><th>Order #</th><th>Customer</th><th>Total</th><th>Payment</th><th>Status</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          <% orders.forEach(function(o) { %>
+            <tr>
+              <td>#<%= o.id %></td>
+              <td><%= o.customer_name %><br><span class="small text-muted"><%= o.customer_email %></span></td>
+              <td><%= formatCurrency(o.total_amount) %></td>
+              <td><%= o.payment_method %> <span class="small text-muted">(<%= o.payment_status %>)</span></td>
+              <td>
+                <form method="POST" action="/admin/orders/<%= o.id %>/status" class="d-flex gap-1">
+                  <select name="order_status" class="form-select form-select-sm" style="width:140px;">
+                    <% ['placed','processing','shipped','delivered','cancelled'].forEach(function(s) { %>
+                      <option value="<%= s %>" <%= o.order_status === s ? 'selected' : '' %>><%= s %></option>
+                    <% }); %>
+                  </select>
+                  <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
+                </form>
+              </td>
+              <td><%= formatDate(o.created_at) %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>
+<%- include('../partials/footer') %>

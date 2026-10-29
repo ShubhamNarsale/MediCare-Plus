@@ -1,0 +1,46 @@
+<%- include('../partials/header') %>
+<%- include('_nav') %>
+<div class="container pb-5">
+  <h1 class="fw-bold mb-4">Appointments</h1>
+
+  <% if (!appointments.length) { %>
+    <p class="text-muted">No appointments booked yet.</p>
+  <% } else { %>
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr><th>Patient</th><th>Doctor</th><th>Department</th><th>Date &amp; Time</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody>
+          <% appointments.forEach(function(a) { %>
+            <tr>
+              <td><%= a.patient_name %><br><span class="small text-muted"><%= a.patient_email %></span></td>
+              <td><%= a.doctor_name %></td>
+              <td><%= a.department_name %></td>
+              <td><%= formatDate(a.appointment_date) %><br><span class="small text-muted"><%= formatTime(a.appointment_time) %></span></td>
+              <td><span class="badge badge-status-<%= a.status %>"><%= a.status %></span></td>
+              <td class="d-flex flex-wrap gap-1">
+                <% if (a.status === 'pending') { %>
+                  <form method="POST" action="/admin/appointments/<%= a.id %>/confirm">
+                    <button type="submit" class="btn btn-sm btn-outline-success">Confirm</button>
+                  </form>
+                <% } %>
+                <% if (a.status === 'confirmed') { %>
+                  <form method="POST" action="/admin/appointments/<%= a.id %>/complete">
+                    <button type="submit" class="btn btn-sm btn-outline-primary">Complete</button>
+                  </form>
+                <% } %>
+                <% if (a.status === 'pending' || a.status === 'confirmed') { %>
+                  <form method="POST" action="/admin/appointments/<%= a.id %>/cancel" onsubmit="return confirm('Cancel this appointment?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Cancel</button>
+                  </form>
+                <% } %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>
+<%- include('../partials/footer') %>

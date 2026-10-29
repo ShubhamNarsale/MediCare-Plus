@@ -1,0 +1,54 @@
+<%- include('../partials/header') %>
+<div class="container py-5">
+  <h1 class="fw-bold mb-1">Book Appointment</h1>
+  <p class="text-muted mb-4">with <%= doctor.name %> &middot; <%= doctor.specialization %></p>
+
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card p-3 text-center">
+        <img src="/images/<%= doctor.image %>" onerror="this.onerror=null;this.src='/images/placeholder.svg'" class="doctor-avatar rounded mb-2" alt="<%= doctor.name %>">
+        <h5 class="mb-0"><%= doctor.name %></h5>
+        <p class="text-primary small"><%= doctor.specialization %></p>
+        <p class="small text-muted mb-1">Fee: <%= formatCurrency(doctor.consultation_fee) %></p>
+        <% if (availableDays.length) { %>
+          <p class="small text-muted mb-0">Available: <%= availableDays.join(', ') %></p>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card p-4">
+        <form method="POST" action="/appointments/book" id="bookAppointmentForm">
+          <input type="hidden" name="doctor_id" value="<%= doctor.id %>">
+
+          <div class="mb-3">
+            <label for="appointment_date" class="form-label">Date</label>
+            <input type="date" id="appointment_date" name="appointment_date" class="form-control" min="<%= new Date().toISOString().split('T')[0] %>" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="appointment_time" class="form-label">Available Time Slots</label>
+            <select id="appointment_time" name="appointment_time" class="form-select" required>
+              <option value="">Select a date first</option>
+            </select>
+            <div id="slotsHelp" class="form-text"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="reason" class="form-label">Reason for Visit (optional)</label>
+            <textarea id="reason" name="reason" class="form-control" rows="3" maxlength="255"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg">Confirm Booking</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.MEDICARE_DOCTOR_ID = <%= doctor.id %>;
+</script>
+<script src="/js/appointments.js"></script>
+
+<%- include('../partials/footer') %>

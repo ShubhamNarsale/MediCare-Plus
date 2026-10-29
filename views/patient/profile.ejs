@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-7">
+      <div class="card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h1 class="fw-bold mb-0">My Profile</h1>
+          <a href="/patient/profile/edit" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i> Edit</a>
+        </div>
+        <table class="table table-borderless mb-0">
+          <tbody>
+            <tr><th class="text-muted" style="width:160px;">Name</th><td><%= profile.name %></td></tr>
+            <tr><th class="text-muted">Email</th><td><%= profile.email %></td></tr>
+            <tr><th class="text-muted">Phone</th><td><%= profile.phone || '—' %></td></tr>
+            <tr><th class="text-muted">Address</th><td><%= profile.address || '—' %></td></tr>
+            <tr><th class="text-muted">Date of Birth</th><td><%= profile.date_of_birth ? formatDate(profile.date_of_birth) : '—' %></td></tr>
+            <tr><th class="text-muted">Gender</th><td><%= profile.gender || '—' %></td></tr>
+            <tr><th class="text-muted">Member Since</th><td><%= formatDate(profile.created_at) %></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

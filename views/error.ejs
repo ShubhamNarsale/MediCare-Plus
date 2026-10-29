@@ -1,0 +1,8 @@
+<%- include('partials/header') %>
+<div class="container py-5 text-center">
+  <i class="bi bi-exclamation-octagon display-1 text-danger"></i>
+  <h1 class="display-5 fw-bold mt-3"><%= typeof title !== 'undefined' ? title : 'Something Went Wrong' %></h1>
+  <p class="lead text-muted"><%= typeof message !== 'undefined' ? message : 'An unexpected error occurred. Please try again later.' %></p>
+  <a href="/" class="btn btn-primary mt-2">Back to Home</a>
+</div>
+<%- include('partials/footer') %>

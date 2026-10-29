@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+<%- include('_nav') %>
+<div class="container pb-5">
+  <h1 class="fw-bold mb-4">Patients</h1>
+
+  <% if (!patients.length) { %>
+    <p class="text-muted">No patients registered yet.</p>
+  <% } else { %>
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr><th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Gender</th><th>Registered</th></tr>
+        </thead>
+        <tbody>
+          <% patients.forEach(function(p) { %>
+            <tr>
+              <td><%= p.name %></td>
+              <td><%= p.email %></td>
+              <td><%= p.phone || '—' %></td>
+              <td><%= p.address || '—' %></td>
+              <td><%= p.gender || '—' %></td>
+              <td><%= formatDate(p.created_at) %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>
+<%- include('../partials/footer') %>

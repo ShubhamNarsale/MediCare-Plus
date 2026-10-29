@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+<div class="container py-5">
+  <div class="emergency-banner p-4 text-center mb-4">
+    <i class="bi bi-exclamation-triangle-fill display-4"></i>
+    <h1 class="fw-bold mt-2">Medical Emergency</h1>
+    <% if (hospital) { %>
+      <p class="fs-3 fw-bold mb-0"><%= hospital.emergency_phone %></p>
+    <% } %>
+    <p class="mb-0">If this is a life-threatening emergency, please call this number immediately or go to your nearest emergency room.</p>
+  </div>
+  <% if (hospital) { %>
+    <p class="text-center text-muted"><%= hospital.name %> &middot; <%= hospital.address %></p>
+  <% } %>
+</div>
+<%- include('../partials/footer') %>
